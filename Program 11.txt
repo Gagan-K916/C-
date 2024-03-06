@@ -1,0 +1,72 @@
+// Develop a C# program to create an abstract class Shape with abstract methods calculateArea() and 
+// calculatePerimeter(). Create subclasses Circle and Triangle that extend the Shape class and implement the 
+// respective methods to calculate the area and perimeter of each shape
+
+abstract class Shape{
+    public abstract double calculateArea();
+    public abstract double calculatePerimeter();
+}
+
+class Circle: Shape{
+    private double radius;
+
+    public Circle(double r){
+        radius = r;
+    }
+
+    public override double calculateArea(){
+        return Math.PI * radius * radius;
+    }
+
+    public override double calculatePerimeter(){
+        return 2 * Math.PI * radius;
+    }
+}
+
+class Triangle: Shape{
+    private double a;
+    private double b;
+    private double c;
+    private double h;
+
+    public Triangle(double a, double b, double c, double h){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.h = h;
+    }
+
+    public override double calculateArea(){
+        return 0.5 * b * h;
+    }
+
+    public override double calculatePerimeter(){
+        return a + b + c;
+    }
+}
+
+class Program11{
+    public static void Main(string[] args){
+        Console.WriteLine("Enter the radius of the circle: ");
+        double radius = double.Parse(Console.ReadLine() ?? "0");
+
+        Shape circle = new Circle(radius);
+        Console.WriteLine("Area of the circle: {0}\nPerimeter of the circle: {1}", circle.calculateArea(), circle.calculatePerimeter());
+
+        Console.WriteLine("\nEnter the length of the side A of triangle: ");
+        double a = double.Parse(Console.ReadLine() ?? "0");
+
+        Console.WriteLine("\nEnter the length of the side B of triangle: ");
+        double b = double.Parse(Console.ReadLine() ?? "0");
+
+        Console.WriteLine("\nEnter the length of the side C of triangle: ");
+        double c = double.Parse(Console.ReadLine() ?? "0");
+
+        Console.WriteLine("\nEnter the height of triangle: ");
+        double h = double.Parse(Console.ReadLine() ?? "0");
+
+        Shape triangle = new Triangle(a, b, c, h);
+        Console.WriteLine("Area of the triangle: {0}\nPerimeter of the triangle: {1}", triangle.calculateArea(), triangle.calculatePerimeter());
+
+    }
+}

@@ -1,0 +1,27 @@
+// Develop a C# program to print Armstrong Number between 1 to 1000. 
+
+
+Console.WriteLine("Enter value of n:");
+int n = int.Parse(Console.ReadLine() ?? "0");
+
+Console.WriteLine("The armstrong numbers from 1 to " + n + " are:");
+for(int i = 1; i <= n; i++){
+    if(isArmstrong(i)){
+        Console.Write(i + " ");
+    }
+}
+
+bool isArmstrong(int num){
+    string temp = num.ToString();
+    int len = temp.Length;
+    double sum = 0;
+
+    for(int i = 0; i < len; i++){
+        sum += Math.Pow(int.Parse(temp[i].ToString()), len);
+    }
+
+    if(sum == num){
+        return true;
+    }
+    return false;
+}

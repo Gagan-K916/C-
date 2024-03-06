@@ -1,0 +1,28 @@
+// Develop a C# program to demonstrate Division by Zero and Index Out of Range exceptions. 
+
+int[] numbers = [2, 1, 6, 0, 9 ];
+
+try{
+    for (int i = 0; i < numbers.Length; i++){
+        Console.WriteLine(numbers[i] / numbers[i + 1]);
+    }
+}
+catch (DivideByZeroException){
+    Console.WriteLine("Division by Zero Error Handled\n");
+}
+
+numbers = [2, 1, 6, 3, 9];
+
+try{
+    for (int i = 0; i < numbers.Length; i++){
+        Console.WriteLine(numbers[i] / numbers[i + 1]);
+    }
+}
+
+catch (IndexOutOfRangeException){
+    Console.WriteLine("Index Out of Range Error Handled");
+}
+finally
+{
+    Console.WriteLine("\nError Handling Demonstrated!");
+}

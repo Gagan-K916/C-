@@ -1,0 +1,12 @@
+// Develop a C# program to read a text file and copy the file contents to another text file.
+
+string filePath = "text.txt";
+
+Console.WriteLine("Reading the contents from '{0}'...\n", filePath);
+Console.WriteLine("Contents of the file are :\n{0}\n", File.ReadAllText(filePath));
+
+Console.Write("Enter the name of the file to copy the contents: ");
+string destFilePath = Console.ReadLine() + ".txt";
+
+File.WriteAllText(destFilePath, File.ReadAllText(filePath));
+Console.WriteLine("Copied!");

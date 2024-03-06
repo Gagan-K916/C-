@@ -1,0 +1,51 @@
+// Develop a C# program to create an interface Resizable with methods resizeWidth(int width) and 
+// resizeHeight(int height) that allow an object to be resized. Create a class Rectangle that implements the 
+// Resizable interface and implements the resize methods
+
+public interface Resizable{
+    public void resizeWidth(int width);
+    public void resizeHeight(int height);
+}
+
+class Rectangle: Resizable{
+    private int width;
+    private int height;
+
+    public Rectangle(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
+    
+    public void resizeWidth(int width){
+        this.width = width;
+    }
+    
+    public void resizeHeight(int height){
+        this.height = height;
+    }
+
+    public void display(){
+        Console.WriteLine("Width: {0}\nHeight: {1}", width, height);
+    }
+}
+
+class Program12{
+    public static void Main(string[] args){
+        Console.Write("Enter the width of the rectangle: ");
+        int width = int.Parse(Console.ReadLine() ?? "0");
+
+        Console.Write("Enter the height of the rectangle: ");
+        int height = int.Parse(Console.ReadLine() ?? "0");
+
+        Rectangle r = new Rectangle(width, height);
+        r.display();
+
+        Console.Write("Enter the resized width of the rectangle: ");
+        r.resizeWidth(int.Parse(Console.ReadLine() ?? "0"));
+
+        Console.Write("Enter the resized height of the rectangle: ");
+        r.resizeHeight(int.Parse(Console.ReadLine() ?? "0"));
+
+        r.display();
+    }
+}

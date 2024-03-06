@@ -1,0 +1,68 @@
+// Develop a C# program to create a class named shape. Create three sub classes namely: circle, triangle and 
+// square, each class has two member functions named draw () and erase (). Demonstrate polymorphism 
+// concepts by developing suitable methods, defining member data and main program. 
+
+class Shape{
+    public virtual void draw(){
+        Console.WriteLine("Drawing the shape.");
+    }
+
+    public virtual void erase(){
+        Console.WriteLine("Erasing the shape.");
+    }
+}
+
+class Circle: Shape{
+    public override void draw(){
+        Console.WriteLine("Drawing a circle.");
+    }
+
+    public override void erase(){
+        Console.WriteLine("Erasing the circle.");
+    }
+}
+
+class Triangle: Shape{
+    public override void draw(){
+        Console.WriteLine("Drawing a triangle.");
+    }
+
+    public override void erase(){
+        Console.WriteLine("Erasing the triangle.");
+    }
+}
+
+class Square: Shape{
+    public override void draw(){
+        Console.WriteLine("Drawing a square.");
+    }
+
+    public override void erase(){
+        Console.WriteLine("Erasing the square.");
+    }
+}
+
+class Program10{
+    public static void Main(){
+        Shape shape = new Shape();
+        Circle circle = new Circle();
+        Triangle triangle = new Triangle();
+        Square square = new Square();
+
+        Console.WriteLine("\nShape Class Methods:");
+        shape.draw();
+        shape.erase();
+
+        Console.WriteLine("\nCircle Class Methods:");
+        circle.draw();
+        circle.erase();
+
+        Console.WriteLine("\nTriangle Class Methods:");
+        triangle.draw();
+        triangle.erase();
+
+        Console.WriteLine("\nSquare Class Methods:");
+        square.draw();
+        square.erase();
+    }
+}

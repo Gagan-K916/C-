@@ -1,0 +1,70 @@
+// Develop a C# program to simulate simple arithmetic calculator for Addition, Subtraction, Multiplication, 
+// Division and Mod operations. Read the operator and operands through console.
+
+
+int a, b;
+string choice;
+bool Running = true;
+
+Console.WriteLine("SIMPLE CALCULATOR");
+
+while (Running){
+    Console.WriteLine("""
+
+    ---MENU---
+    +. Addition
+    -. Subtraction
+    *. Multiplication
+    /. Division
+    %. Modulus
+    E. Exit
+
+    Enter an option:
+    """);
+    choice = Console.ReadLine() ?? "";
+    switch (choice){
+        case "+":
+            (a, b) = inputter();
+            Console.WriteLine("Sum of {0} and {1} is {2}", a, b, a+b);
+            break;
+        case "-":
+            (a, b) = inputter();
+            Console.WriteLine("Subtraction of " + a + " and " + b + " is " + (a - b));
+            break;
+        case "*":
+            (a, b) = inputter();
+            Console.WriteLine("Product of " + a + " and " + b + " is " + (a * b));
+            break;
+        case "/":
+            (a, b) = inputter();
+            if(b != 0){
+                Console.WriteLine("Division of " + a + " and " + b + " is " + (a / b));
+            } else{
+                Console.WriteLine("Division by Zero not possible");
+            }
+            break;
+        case "%":
+            (a, b) = inputter();
+            if(b != 0){
+                Console.WriteLine("Modulus of " + a + " and " + b + " is " + (a % b));
+            } else{
+                Console.WriteLine("Division by Zero not possible");
+            }
+            break;
+        case "E":
+            Running = false;
+            Console.WriteLine("Program Halted Successfully");
+            break;
+        default:
+            Console.WriteLine("Enter a valid option!\n");
+            break;
+    }
+}
+
+(int, int) inputter(){
+    Console.WriteLine("Enter the first number: ");
+    int a = int.Parse(Console.ReadLine() ?? "0");
+    Console.WriteLine("Enter the second number: ");
+    int b = int.Parse(Console.ReadLine() ?? "0");
+    return (a, b);
+}

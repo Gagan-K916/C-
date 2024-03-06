@@ -1,0 +1,115 @@
+// Develop a C# Program to Implement Stack with Push and Pop Operations 
+// [Hint: Use class, get/set properties, methods for push and pop and main method]
+
+class Stack{
+    private int _top;
+    private int[] items;
+    private int max_size;
+
+    public Stack(int size){
+        max_size = size;
+        items = new int[size];
+        _top = -1;
+    }
+
+    public void display(){
+        if(!isEmpty()){
+            Console.WriteLine("The Stack Elements are: ");
+            for(int i = top; i >= 0; i--){
+                Console.WriteLine(items[i]);
+            }
+        }
+    }
+
+    public void peek(){
+        if(!isEmpty()){
+            Console.WriteLine("The top element of the Stack is {0}.", items[top]);
+        }
+    }
+
+    public void push(int item){
+        if(!isFull()){
+            items[++_top] = item;
+            Console.WriteLine("{0} added to the Stack!", item);
+            return;
+        }
+    }
+
+    public int pop(){
+        if(!isEmpty()){
+            return items[_top--];
+        }
+        return -1;
+    }
+
+    public bool isFull(){
+        if(top == max_size-1){
+            Console.WriteLine("Stack is Full!");
+            return true;
+        }
+        return false;
+    }
+
+    public bool isEmpty(){
+        if(top == -1){
+            Console.WriteLine("Stack is Empty!");
+            return true;
+        }
+        return false;
+    }
+
+    public int top{
+        get{
+            return _top;
+        }
+    }
+}
+
+class Program7{
+    static void Main(string[] args){
+        Console.Write("Enter the max size of the stack: ");
+        int size = int.Parse(Console.ReadLine() ?? "0");
+
+        Stack stack = new Stack(size);
+
+        while(true){
+            Console.WriteLine("""
+            ---MENU---
+            1. Push an item
+            2. Pop an item
+            3. Peek top item
+            4. Display stack
+            5. Exit
+
+            Enter an option:
+            """);
+            int choice = int.Parse(Console.ReadLine() ?? "0");
+
+            switch(choice){
+                case 1:
+                    Console.Write("Enter an element to push to stack: ");
+                    stack.push(int.Parse(Console.ReadLine() ?? "0"));
+                    break;
+                case 2:
+                    Console.WriteLine("The popped element is {0}.", stack.pop());
+                    break;
+                case 3:
+                    stack.peek();
+                    break;
+                case 4:
+                    stack.display();
+                    break;
+                case 5:
+                    Console.WriteLine("Program Halted Successfully!");
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Enter a valid option!");
+                    break;
+            }
+        }
+    }
+}
+
+
+

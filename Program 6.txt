@@ -1,0 +1,25 @@
+// Develop a C# program to generate and print Floyds Triangle using Jagged arrays. 
+
+Console.WriteLine("Enter the number of steps: ");
+int rows = int.Parse(Console.ReadLine() ?? "0");
+
+int[][] floydsTriangle = new int[rows][];
+
+for(int i=0; i< rows; i++){
+    floydsTriangle[i] = new int[i+1]; 
+}
+
+int number = 1; 
+for(int i=0; i< rows; i++){
+    for(int j=0; j<=i; j++) {
+        floydsTriangle[i][j] = number;
+        number++;
+    }
+}
+
+for (int i=0; i< rows; i++){
+    for (int j=0; j <= i; j++){
+        Console.Write(floydsTriangle[i][j] + " ");
+    }
+    Console.WriteLine();
+}        
