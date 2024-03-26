@@ -1,0 +1,118 @@
+// Abstract base class for all food items
+public abstract class FoodItem
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+    public string Description { get; set; }
+
+    public FoodItem(string name, decimal price, string description)
+    {
+        Name = name;
+        Price = price;
+        Description = description;
+    }
+
+    public override string ToString()
+    {
+    return $"Name: {Name}, Price: ${Price:F2}, Description: {Description}";
+    }
+}
+
+// Concrete class for appetizer items
+public class Appetizer : FoodItem
+{
+    public bool IsVegetarian { get; set; }
+
+    public Appetizer(string name, decimal price, string description, bool isVegetarian) : base(name, price, description)
+    {
+        IsVegetarian = isVegetarian;
+    }
+}
+
+// Concrete class for main course items
+public class MainCourse : FoodItem
+{
+    public string Protein { get; set; }
+
+    public MainCourse(string name, decimal price, string description, string protein) : base(name, price, description)
+    {
+        Protein = protein;
+    }
+}
+
+// Concrete class for dessert items
+public class Dessert : FoodItem
+{
+    public bool IsGlutenFree { get; set; }
+
+    public Dessert(string name, decimal price, string description, bool isGlutenFree) : base(name, price, description)
+    {
+        IsGlutenFree = isGlutenFree;
+    }
+}
+
+public class Order
+{
+    public List<FoodItem> Items { get; private set; }
+    public decimal TaxRate { get; set; }
+
+    public Order(decimal taxRate)
+    {
+        Items = new List<FoodItem>();
+        TaxRate = taxRate;
+    }
+
+    public void AddItem(FoodItem item)
+    {
+        Items.Add(item);
+    }
+
+    public decimal GetSubtotal()
+    {
+        return Items.Sum(item => item.Price);
+    }
+
+    public decimal GetTax()
+    {
+        return GetSubtotal() * TaxRate;
+    }
+
+    public decimal GetTotal(decimal tip = 0)
+    {
+        return GetSubtotal() + GetTax() + tip;
+    }
+
+    public void PrintOrder()
+    {
+    Console.WriteLine("Order Details:");
+        foreach (FoodItem item in Items)
+        {
+            Console.WriteLine(item);
+        }
+        Console.WriteLine($"Subtotal: ${GetSubtotal():F2}");
+        Console.WriteLine($"Tax ({TaxRate * 100}%): ${GetTax():F2}");
+        Console.WriteLine($"Total: ${GetTotal():F2}");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Create food items
+        Appetizer hummus = new Appetizer("Hummus", 8.50m, "Classic hummus with pita bread", true);
+        MainCourse steak = new MainCourse("New York Strip Steak", 25.00m, "Grilled steak with fries and vegetables", "Beef");
+        Dessert brownie = new Dessert("Chocolate Brownie", 6.00m, "Warm brownie with vanilla ice cream", false);
+
+        // Create order with tax rate
+        Order order = new Order(0.07m);
+
+        // Add items to order
+        order.AddItem(hummus);
+        order.AddItem(steak);
+        order.AddItem(brownie);
+
+        // Print order details with total cost
+        order.PrintOrder();
+    }
+}

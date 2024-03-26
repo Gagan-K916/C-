@@ -1,0 +1,127 @@
+// Base class for all products
+public class Product
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public int Quantity { get; set; }
+
+    public Product(string name, double price, int quantity)
+    {
+        Name = name;
+        Price = price;
+        Quantity = quantity;
+    }
+
+    public virtual string GetDetails() // Virtual method for specific details in derived classes
+    {
+        return $"Name: {Name}, Price: ${Price}, Quantity: {Quantity}";
+    }
+
+}
+
+// Electronics class inherits from Product
+public class Electronics : Product
+{
+    public string Brand { get; set; }
+
+    public Electronics(string name, double price, int quantity, string brand) : base(name, price, quantity)
+    {
+        Brand = brand;
+    }
+
+    public override string GetDetails()
+    {
+        return base.GetDetails() + $", Brand: {Brand}";
+    }
+}
+
+// Clothing class inherits from Product
+public class Clothing : Product
+{
+    public string Size { get; set; }
+
+    public Clothing(string name, double price, int quantity, string size) : base(name, price, quantity)
+    {
+        Size = size;
+    }
+
+    public override string GetDetails()
+    {
+        return base.GetDetails() + $", Size: {Size}";
+    }
+}
+
+// Book class inherits from Product
+
+public class Book : Product
+{
+    public string Author { get; set; }
+
+    public Book(string name, double price, int quantity, string author) : base(name, price, quantity)
+    {
+        Author = author;
+    }
+
+    public override string GetDetails()
+    {
+        return base.GetDetails() + $", Author: {Author}";
+    }
+}
+
+// Shopping Cart class to manage products
+public class ShoppingCart
+{
+    private List<Product> items = new List<Product>();
+
+    public void AddProduct(Product product)
+    {
+        items.Add(product);
+    }
+
+    public List<string> GetCartDetails()
+    {
+        List<string> details = new List<string>();
+        foreach (Product item in items)
+        {
+            details.Add(item.GetDetails());
+        }
+        return details;
+    }
+
+    public double GetTotalCost()
+    {
+        double totalCost = 0;
+        foreach (Product item in items)
+        {
+            totalCost += item.Price * item.Quantity;
+        }
+        return totalCost;
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Create product instances
+        Electronics tv = new Electronics("TV", 500.00, 1, "Samsung");
+        Clothing shirt = new Clothing("Shirt", 20.00, 2, "Medium");
+        Book book = new Book("The Hitchhiker's Guide to the Galaxy", 10.00, 1, "Douglas Adams");
+
+        // Shopping cart and adding products
+        ShoppingCart cart = new ShoppingCart();
+        cart.AddProduct(tv);
+        cart.AddProduct(shirt);
+        cart.AddProduct(book);
+
+        // Display cart details
+        Console.WriteLine("Shopping Cart Items:");
+        foreach (string detail in cart.GetCartDetails())
+        {
+            Console.WriteLine(detail);
+        }
+
+        // Display total cost
+        Console.WriteLine($"Total Cost: ${cart.GetTotalCost():F2}");
+    }
+}

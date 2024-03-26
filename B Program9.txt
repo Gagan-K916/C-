@@ -1,0 +1,62 @@
+public class Package
+{
+    public double Weight { get; set; }
+    public Package(double weight)
+    {
+        Weight = weight;
+    }
+    // Overload the + operator to add weights
+    public static Package operator +(Package package1, Package package2)
+    {
+        return new Package(package1.Weight + package2.Weight);
+    }
+    // Overload the – operator to subtract weights
+    public static Package operator -(Package package1, Package package2)
+    {
+        if (package1.Weight < package2.Weight)
+        {
+            throw new ArgumentException("Package 1 weight cannot be less than Package 2 weight for subtraction.") ;
+        }
+        return new Package(package1.Weight - package2.Weight);
+    }
+    // Overload the > operator to compare weights
+    public static bool operator >(Package package1, Package package2)
+    {
+        return package1.Weight > package2.Weight;
+    }
+    // Overload the < operator to compare weights
+
+    public static bool operator <(Package package1, Package package2)
+    {
+        return package1.Weight < package2.Weight;
+    }
+    // Override ToString method for displaying weight information
+    public override string ToString()
+    {
+        return $"Package Weight: {Weight}kg";
+    }
+}
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Package package1 = new Package(5.0);
+        Package package2 = new Package(3.5);
+        // Calculate total weight using overloaded + operator
+        Package totalPackage = package1 + package2;
+        Console.WriteLine("Total Weight: {0}", totalPackage);
+        // Compare weights using overloaded > and < operators
+        Console.WriteLine("Package 1 heavier: {0}", package1 > package2);
+        Console.WriteLine("Package 2 heavier: {0}", package2 < package1);
+        // Subtract weights (throws exception if weight is negative)
+        try
+        {
+            Package difference = package1 - package2;
+            Console.WriteLine("Weight Difference: {0}", difference);
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

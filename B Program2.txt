@@ -1,0 +1,137 @@
+using System;
+public class BankAccount
+{
+    public string AccountNumber { get; set; }
+    public decimal Balance { get; private set; }
+    public string OwnerName { get; set; }
+
+    public BankAccount(string accountNumber, decimal balance, string ownerName)
+    {
+        AccountNumber = accountNumber;
+        Balance = ValidateBalance(balance);
+        OwnerName = ownerName;
+    }
+
+    private decimal ValidateBalance(decimal balance)
+    {
+        if (balance < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(balance), "Balance cannot be negative");
+        }
+        return balance;
+    }
+
+    public virtual void Deposit(decimal amount)
+    {
+        Balance += ValidateAmount(amount);
+    }
+
+    public virtual void Withdraw(decimal amount)
+    {
+        Balance -= ValidateAmount(amount);
+    }
+
+    protected decimal ValidateAmount(decimal amount)
+    {
+        if (amount <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be positive");
+        }
+        return amount;
+    }
+
+    public virtual void DisplayDetails()
+    {
+        Console.WriteLine($"Account Number: {AccountNumber}");
+        Console.WriteLine($"Balance: {Balance:C}");
+        Console.WriteLine($"Owner Name: {OwnerName}");
+    }
+}
+
+public class SavingsAccount : BankAccount
+{
+
+    public decimal InterestRate { get; set; }
+
+    public SavingsAccount(string accountNumber, decimal balance, string ownerName, decimal interestRate)
+    : base(accountNumber, balance, ownerName)
+    {
+        InterestRate = interestRate;
+    }
+
+    public override void DisplayDetails()
+    {
+        base.DisplayDetails();
+        Console.WriteLine($"Interest Rate: {InterestRate:P}");
+    }
+}
+
+public class CheckingAccount : BankAccount
+{
+    public decimal OverdraftLimit { get; set; }
+
+    public CheckingAccount(string accountNumber, decimal balance, string ownerName, decimal overdraftLimit)
+    : base(accountNumber, balance, ownerName)
+    {
+        OverdraftLimit = overdraftLimit;
+    }
+
+    public override void Withdraw(decimal amount)
+    {
+        if (Balance - amount < -OverdraftLimit)
+        {
+            throw new InvalidOperationException("Insufficient funds. Withdrawal exceeds overdraft limit.");
+        }
+        base.Withdraw(amount);
+    }
+
+    public override void DisplayDetails()
+    {
+        base.DisplayDetails();
+        Console.WriteLine($"Overdraft Limit: {OverdraftLimit:C}");
+    }
+}
+
+public class BankSystem
+{
+    private List<BankAccount> accounts = new List<BankAccount>();
+
+    public void CreateSavingsAccount(string accountNumber, decimal balance, string ownerName, decimal interestRate)
+    {
+        accounts.Add(new SavingsAccount(accountNumber, balance, ownerName, interestRate));
+    }
+
+    public void CreateCheckingAccount(string accountNumber, decimal balance, string ownerName, decimal overdraftLimit)
+    {
+        accounts.Add(new CheckingAccount(accountNumber, balance, ownerName, overdraftLimit));
+    }
+
+    public decimal GetTotalBalance()
+    {
+        return accounts.Sum(account => account.Balance);
+    }
+
+    public void DisplayAllAccounts()
+    {
+        foreach (var account in accounts)
+        {
+            account.DisplayDetails();
+            Console.WriteLine("--------------------");
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        BankSystem bank = new BankSystem();
+
+        bank.CreateSavingsAccount("SAV1234", 1000, "John Doe", 0.02m);
+        bank.CreateCheckingAccount("CHK5678", 500, "Jane Smith", 200);
+
+        bank.DisplayAllAccounts();
+
+        Console.WriteLine("Total Balance: {0:C}", bank.GetTotalBalance());
+    }
+}

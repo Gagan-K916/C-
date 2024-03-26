@@ -1,0 +1,76 @@
+// Abstract base class for all employees
+public abstract class Employee
+{
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public decimal HourlyRate { get; set; }
+    public Employee(string name, int id, decimal hourlyRate)
+    {
+        Name = name;
+        Id = id;
+        HourlyRate = hourlyRate;
+    }
+    // Abstract method for calculating weekly pay (implemented differently in derived classes)
+    public abstract decimal CalculateWeeklyPay();
+    public override string ToString()
+    {
+        return $"Name: {Name}, ID: {Id}";
+    }
+}
+// Concrete class for full-time employees with fixed weekly salary
+public class FullTimeEmployee : Employee
+{
+    private decimal WeeklySalary { get; set; }
+    public FullTimeEmployee(string name, int id, decimal hourlyRate, decimal weeklySalary) : base(name, id, hourlyRate)
+    {
+        WeeklySalary = weeklySalary;
+    }
+    public override decimal CalculateWeeklyPay()
+    {
+        return WeeklySalary;
+    }
+}
+// Concrete class for part-time employees with pay based on hours worked
+public class PartTimeEmployee : Employee
+{
+    private int HoursWorked { get; set; }
+    public PartTimeEmployee(string name, int id, decimal hourlyRate, int hoursWorked) : base(name, id, hourlyRate)
+    {
+        HoursWorked = hoursWorked;
+    }
+    public override decimal CalculateWeeklyPay()
+    {
+        return HoursWorked * HourlyRate;
+    }
+}
+// Concrete class for contractors with fixed pay per project
+public class Contractor : Employee
+{
+    private decimal ProjectPay { get; set; }
+    public Contractor(string name, int id, decimal hourlyRate, decimal projectPay) : base(name, id, hourlyRate)
+    {
+        ProjectPay = projectPay;
+    }
+    public override decimal CalculateWeeklyPay()
+    {
+        return ProjectPay;
+    }
+}
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Create employee instances
+        Employee fullTimeEmp = new FullTimeEmployee("John Doe", 1234, 25.00m, 1000.00m);
+        Employee partTimeEmp = new PartTimeEmployee("Jane Smith", 5678, 20.00m, 20);
+        Employee contractor = new Contractor("Mike Jones", 9012, 30.00m, 500.00m);
+        // Calculate and display weekly pay
+        List<Employee> employees = new List<Employee>() { fullTimeEmp, partTimeEmp, contractor };
+        foreach (Employee emp in employees)
+        {
+            Console.WriteLine(emp);
+            Console.WriteLine($"Weekly Pay: ${emp.CalculateWeeklyPay():F2}");
+            Console.WriteLine();
+        }
+    }
+}

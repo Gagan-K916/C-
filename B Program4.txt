@@ -1,0 +1,140 @@
+// Base class for all animals
+public class Animal
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string Gender { get; set; }
+
+    public Animal(string name, int age, string gender)
+    {
+        Name = name;
+        Age = age;
+        Gender = gender;
+    }
+
+    // Virtual method for sound (implemented differently in derived classes)
+    public virtual string MakeSound()
+    {
+        return "Generic animal sound";
+    }
+
+    public override string ToString()
+    {
+        return $"Name: {Name}, Age: {Age}, Gender: {Gender}";
+    }
+}
+
+// Derived class for mammals
+public class Mammal : Animal
+{
+    public string FurColor { get; set; }
+
+    public Mammal(string name, int age, string gender, string furColor) : base(name, age, gender)
+    {
+        FurColor = furColor;
+    }
+
+    public override string MakeSound()
+    {
+        return "Mammal sound";
+    }
+
+    public void Walk()
+    {
+        Console.WriteLine($"{Name} is walking.");
+    }
+}
+
+// Derived class for birds
+public class Bird : Animal
+{
+    public string Habitat { get; set; }
+    public bool CanFly { get; set; }
+
+    public Bird(string name, int age, string gender, string habitat, bool canFly) : base(name, age, gender)
+    {
+        Habitat = habitat;
+        CanFly = canFly;
+    }
+
+    public override string MakeSound()
+    {
+        return "Bird sound";
+    }
+
+    public void Fly()
+    {
+        if (CanFly)
+        {
+            Console.WriteLine($"{Name} is flying.");
+        }
+        else
+        {
+            Console.WriteLine($"{Name} cannot fly.");
+        }
+    }
+}
+
+// Derived class for reptiles
+public class Reptile : Animal
+{
+    public bool IsColdBlooded { get; set; }
+
+    public Reptile(string name, int age, string gender, bool isColdBlooded) : base(name, age, gender)
+    {
+        IsColdBlooded = isColdBlooded;
+    }
+
+    public override string MakeSound()
+    {
+        return "Reptile sound";
+    }
+
+    public void Swim()
+    {
+        Console.WriteLine($"{Name} is swimming.");
+    }
+}
+
+public class Program
+
+{
+    public static void Main(string[] args)
+    {
+        // Create animal instances
+        Lion lion = new Lion("Leo", 5, "Male", "Golden");
+        Bird parrot = new Bird("Polly", 2, "Female", "Jungle", true);
+        Reptile snake = new Reptile("Slither", 3, "Unknown", true);
+
+        // Display animal details
+        Console.WriteLine(lion);
+        Console.WriteLine($"Fur Color: {lion.FurColor}");
+        Console.WriteLine(parrot);
+        Console.WriteLine($"Habitat: {parrot.Habitat}, Can Fly: {parrot.CanFly}");
+        Console.WriteLine(snake);
+        Console.WriteLine($"Cold Blooded: {snake.IsColdBlooded}");
+
+        // Perform animal actions
+        lion.Walk();
+        parrot.Fly();
+        snake.Swim();
+
+        // Make generic sound (demonstrates polymorphism)
+        Console.WriteLine(lion.MakeSound());
+        Console.WriteLine(parrot.MakeSound());
+        Console.WriteLine(snake.MakeSound());
+    }
+}
+
+// Add more specific mammal classes like Lion, Tiger etc. if needed
+public class Lion : Mammal
+{
+    public Lion(string name, int age, string gender, string furColor) : base(name, age, gender, furColor)
+    {
+    }
+
+    public override string MakeSound()
+    {
+        return "Roar";
+    }
+}

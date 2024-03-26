@@ -1,0 +1,107 @@
+// Interface for common playlist functionalities
+public interface IPlaylist
+{
+    string Name { get; set; }
+    int NumberOfSongs { get; }
+    TimeSpan TotalDuration { get; }
+
+    void AddSong(Song song);
+    void RemoveSong(Song song);
+    void DisplaySongs();
+}
+
+// Class representing a song
+public class Song
+{
+    public string Title { get; set; }
+    public TimeSpan Duration { get; set; }
+
+
+    public Song(string title, TimeSpan duration)
+    {
+        Title = title;
+        Duration = duration;
+    }
+}
+
+// Class for a regular playlist
+public class RegularPlaylist : IPlaylist
+{
+    private List<Song> songs;
+
+    public RegularPlaylist(string name)
+    {
+        Name = name;
+        songs = new List<Song>();
+    }
+
+    public string Name { get; set; }
+
+    public int NumberOfSongs => songs.Count;
+
+    public TimeSpan TotalDuration
+    {
+        get
+        {
+            TimeSpan totalDuration = TimeSpan.Zero;
+            foreach (Song song in songs)
+            {
+                totalDuration += song.Duration;
+            }
+            return totalDuration;
+        }
+    }
+
+
+    public void AddSong(Song song)
+    {
+        songs.Add(song);
+    }
+
+    public void RemoveSong(Song song)
+    {
+        songs.Remove(song);
+    }
+
+    public void DisplaySongs()
+    {
+        Console.WriteLine($"Playlist: {Name}");
+        if (songs.Count == 0)
+        {
+            Console.WriteLine("No songs in playlist.");
+        }
+        else
+        {
+            int i = 1;
+            foreach (Song song in songs)
+            {
+                Console.WriteLine($"{i++}. {song.Title}");
+            }
+        }
+    }
+}
+
+// (Similar implementation for SmartPlaylist and CollaborativePlaylist)
+
+// (These classes would have their own logic based on smart playlist rules and collaboration features)
+
+public class Program
+{
+    public static void Main(string[] args)
+
+    {
+        // Create different playlist instances
+        RegularPlaylist myPlaylist = new RegularPlaylist("My Music");
+        // (Create instances of SmartPlaylist and CollaborativePlaylist)
+
+        // Add songs to the playlist
+        myPlaylist.AddSong(new Song("Song 1", TimeSpan.FromMinutes(3)));
+        myPlaylist.AddSong(new Song("Song 2", TimeSpan.FromMinutes(4)));
+
+        // Display playlist information
+        myPlaylist.DisplaySongs();
+        Console.WriteLine($"Total Duration: {myPlaylist.TotalDuration}");
+
+        // (Similar operations for SmartPlaylist and CollaborativePlaylist)
+    }
+}

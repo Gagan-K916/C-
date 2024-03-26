@@ -1,0 +1,67 @@
+public class StaffMember
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public decimal Salary { get; set; }
+    public StaffMember(string name, int age, decimal salary)
+    {
+        Name = name;
+        Age = age;
+        Salary = salary;
+    }
+    public virtual void DisplayDetails()
+    {
+        Console.WriteLine($"Name: {Name}");
+        Console.WriteLine($"Age: {Age}");
+        Console.WriteLine($"Salary: ${Salary:F2}");
+    }
+}
+public class Teacher : StaffMember
+{
+    public string Subject { get; set; }
+    public Teacher(string name, int age, decimal salary, string subject) : base(name, age, salary)
+    {
+        Subject = subject;
+    }
+    public override void DisplayDetails()
+    {
+        base.DisplayDetails();
+        Console.WriteLine($"Subject: {Subject}");
+    }
+}
+public class AdministrativeStaff : StaffMember
+{
+    public string Department { get; set; }
+    public AdministrativeStaff(string name, int age, decimal salary, string department) : base(name, age, salary)
+    {
+        Department = department;
+    }
+    public override void DisplayDetails()
+    {
+        base.DisplayDetails();
+        Console.WriteLine($"Department: {Department}");
+    }
+}
+public class StaffManagementSystem
+{
+    public static void Main(string[] args)
+    {
+        List<StaffMember> staffList = new List<StaffMember>();
+        // Create teacher instances
+        staffList.Add(new Teacher("John Doe", 40, 50000, "Math"));
+        staffList.Add(new Teacher("Jane Smith", 35, 45000, "English"));
+        // Create administrative staff instances
+        staffList.Add(new AdministrativeStaff("Mike Brown", 42, 35000, "Finance"));
+        staffList.Add(new AdministrativeStaff("Alice Lee", 38, 38000, "Admissions"));
+        // Display staff details
+        Console.WriteLine("**Staff Details**");
+        foreach (StaffMember staff in staffList)
+        {
+            staff.DisplayDetails();
+            Console.WriteLine();
+        }
+        // Calculate total salary expenditure
+        Decimal totalSalary = staffList.Sum(staff => staff.Salary);
+        Console.WriteLine($"Total Salary Expenditure: ${totalSalary:F2}");
+    }
+}

@@ -1,0 +1,106 @@
+// Abstract base class for all courses
+public abstract class Course
+{
+    public string CourseCode { get; set; }
+    public string Title { get; set; }
+    public string Instructor { get; set; }
+    public List<Student> EnrolledStudents { get; private set; }
+    public Course(string courseCode, string title, string instructor)
+    {
+        CourseCode = courseCode;
+        Title = title;
+        Instructor = instructor;
+        EnrolledStudents = new List<Student>();
+    }
+    public abstract string GetCourseDescription();
+    public void EnrollStudent(Student student)
+    {
+        EnrolledStudents.Add(student);
+    }
+    public override string ToString()
+    {
+        return $"Course Code: {CourseCode}, Title: {Title}, Instructor: {Instructor}";
+    }
+}
+// Class representing a student
+public class Student
+{
+    public string Name { get; set; }
+    public string Id { get; set; }
+    public Student(string name, string id)
+    {
+        Name = name;
+        Id = id;
+    }
+    public override string ToString()
+    {
+        return $"Name: {Name}, ID: {Id}";
+    }
+}
+// Concrete class for Computer Science course
+public class ComputerScienceCourse : Course
+{
+    public string ProgrammingLanguage { get; set; }
+    public ComputerScienceCourse(string courseCode, string title, string instructor, string programmingLanguage) :
+base(courseCode, title, instructor)
+    {
+        ProgrammingLanguage = programmingLanguage;
+    }
+    public override string GetCourseDescription()
+    {
+        return $"This course covers the fundamentals of computer science using {ProgrammingLanguage}.";
+    }
+}
+
+// Concrete class for Mathematics course
+public class MathematicsCourse : Course
+{
+    public string MathArea { get; set; }
+    public MathematicsCourse(string courseCode, string title, string instructor, string mathArea) : base(courseCode, title, instructor)
+    {
+        MathArea = mathArea;
+    }
+    public override string GetCourseDescription()
+    {
+        return $"This course focuses on {MathArea}.";
+    }
+}
+// Concrete class for Literature course
+public class LiteratureCourse : Course
+{
+    public string Genre { get; set; }
+    public LiteratureCourse(string courseCode, string title, string instructor, string genre) : base(courseCode, title, instructor)
+    {
+        Genre = genre;
+    }
+    public override string GetCourseDescription()
+    {
+        return $"This course explores {Genre} literature.";
+    }
+}
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Create course instances
+        ComputerScienceCourse csCourse = new ComputerScienceCourse("CSC101", "Introduction to Programming", "Prof. Smith", "Python");
+        MathematicsCourse mathCourse = new MathematicsCourse("MAT202", "Calculus I", "Prof.Jones", "Differential Calculus");
+        LiteratureCourse litCourse = new LiteratureCourse("LIT303", "British Literature", "Prof.White", "Victorian Era");
+        // Enroll students
+        csCourse.EnrollStudent(new Student("Alice", "12345"));
+        csCourse.EnrollStudent(new Student("Bob", "54321"));
+        mathCourse.EnrollStudent(new Student("Charlie", "98765"));
+        // Display course details
+        Console.WriteLine(csCourse);
+        Console.WriteLine(csCourse.GetCourseDescription());
+        Console.WriteLine("Enrolled Students:");
+        foreach (Student student in csCourse.EnrolledStudents)
+        {
+            Console.WriteLine(student);
+        }
+        Console.WriteLine(mathCourse);
+        Console.WriteLine(mathCourse.GetCourseDescription());
+        Console.WriteLine(litCourse);
+        Console.WriteLine(litCourse.GetCourseDescription());
+    }
+}
