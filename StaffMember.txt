@@ -1,3 +1,25 @@
+You are tasked with designing a system for a school to manage different types of staff 
+
+members: teachers and administrative staff. Both types of staff members share some 
+
+common attributes such as name, age, and salary, but they also have their own unique 
+
+attributes and behaviors(Methods).
+
+Design a C# program using inheritance to model this system. Implement a base class called 
+
+StaffMember that includes common attributes and behaviors for both teachers and 
+
+administrative staff. Then, create derived classes Teacher and AdministrativeStaff that 
+
+inherit from StaffMember and add specific attributes and behaviors for each role.
+
+Your program should allow for the following functionality:
+
+ Create instances of teachers and administrative staff with different attributes.
+
+ Display the details of each staff member, including their specific attributes.
+
 public class StaffMember
 {
     public string Name { get; set; }
