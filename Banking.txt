@@ -1,3 +1,30 @@
+You have been hired to develop a simple banking system for a local bank. The bank offers 
+
+different types of accounts: savings accounts and current accounts. Both types of 
+
+accounts have common features such as account number, balance, and owner's name, 
+
+but they also have their own unique functionalities.
+
+Design a C# program using inheritance to model this banking system. Implement a base class 
+
+called BankAccount that includes common attributes and behaviors for both savings and 
+
+current accounts. Then, create derived classes SavingsAccount and CurrentAccount that 
+
+inherit from BankAccount and add specific attributes and behaviors for each type of account.
+
+Your program should allow for the following functionality:
+
+ Create instances of savings and checking accounts with different attributes.
+
+ Deposit and withdraw money from accounts.
+
+ Display the details of each account, including specific attributes like interest rate for 
+
+savings accounts and overdraft limit for checking accounts.
+
+
 using System;
 public class BankAccount
 {
